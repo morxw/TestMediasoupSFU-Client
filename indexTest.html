@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="icon" type="image/png" href="mediasoup.png" />
+  <title>Mediasoup Sample App</title>
+</head>
+<style>
+    body {
+        display: flex;
+        height: 100vh;
+        margin: 0;
+        background-color: #282c34;
+        align-items: center;
+        justify-content: center;
+        padding: 0 50px;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    .container {
+        position: absolute;
+    }
+    .buttons {
+        position: unset;
+        align-items: end;
+        justify-content: end;
+        margin-bottom: 20px;
+        align-self: flex-end;
+    }
+    .button {
+        margin-left: 20px;
+        margin-right: 20px;
+        background-color: #A901DB;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+    #remote_video {
+        position: relative;
+        max-width: 100%;
+        width: 640px;
+        height: 480px;
+        margin: 0 50px;
+        box-sizing: border-box;
+        border-radius: 2px;
+        padding: 0;
+        box-shadow: rgba(172, 172, 172, 0.2) 0px 0px 2px 2px, rgba(172, 172, 172, 0.2) 0px 0px 4px 4px, rgba(172, 172, 172, 0.2) 0px 0px 8px 8px;
+    }
+
+    #local_video {
+        width: 120px;
+        height: 90px;
+        position: absolute;
+        box-sizing: border-box;
+        border-radius: 2px;
+        padding: 0;
+        box-shadow: rgba(172, 172, 172, 0.2) 0px 0px 1px 1px, rgba(172, 172, 172, 0.2) 0px 0px 2px 2px, rgba(172, 172, 172, 0.2) 0px 0px 4px 4px;
+        top: 8%;
+        left: 70%;
+        z-index: 10;
+    }
+</style>
+<body>
+    <div class="container">
+        <video id="local_video" controls autoplay playsinline></video>
+        <video id="remote_video" controls autoplay playsinline></video>
+    </div>
+    <div class="buttons">
+          <button class="button" id="btn_connect">Connect</button> <span id="connection_status"></span>
+          <label><input type="checkbox" id="chk_simulcast"> Use Simulcast</label>
+
+            <button class="button" id="btn_webcam">Start Webcam</button>
+            <button class="button" id="btn_screen">Share Screen</button>
+
+          <button class="button" id="btn_subscribe">Subscribe</button> <span id="sub_status"></span>
+    </div>
+</body>
+<script>
+  // window.localStorage.setItem('debug', 'mediasoup-client:WARN* mediasoup-client:ERROR*');
+  window.localStorage.setItem('debug', 'mediasoup-client:*');
+</script>
+<script type="text/javascript" src="app-bundle.js"></script>
+</html>

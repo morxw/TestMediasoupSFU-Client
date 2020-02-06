@@ -10,21 +10,14 @@ let socket;
 let producer;
 
 const $ = document.querySelector.bind(document);
-const btnConnect = $('#btn_connect');
-const btnPublish = $('#btn_publish');
-const btnSubscribe = $('#btn_subscribe');
-const txtConnection = $('#connection_status');
-const txtPublish = $('#pub_status');
-const txtSubscription = $('#sub_status');
-
-btnConnect.addEventListener('click', connect);
-btnPublish.addEventListener('click', publish);
-btnSubscribe.addEventListener('click', subscribe);
+//const btnConnect = $('#btn_connect');
+//const btnPublish = $('#btn_publish');
+//const btnSubscribe = $('#btn_subscribe');
+//const txtConnection = $('#connection_status');
+//const txtPublish = $('#pub_status');
+//const txtSubscription = $('#sub_status');
 
 async function connect () {
-  btnConnect.disabled = true;
-  txtConnection.innerHTML = 'Connecting...';
-
   const opts = {
     path: '/server',
     transports: ['websocket'],
@@ -36,30 +29,23 @@ async function connect () {
 
   socket.on('connect', async () => {
     console.log('connected');
-    txtConnection.innerHTML = 'Connected';
-    btnPublish.disabled = false;
 
     const data = await socket.request('getRouterRtpCapabilities');
     await loadDevice(data);
     console.log('RTP Capabilities', device.rtpCapabilities);
+    subscribe();
   });
 
   socket.on('disconnect', () => {
     console.log('disconnected');
-    txtConnection.innerHTML = 'Disconnected';
-    btnConnect.disabled = false;
-    btnPublish.disabled = true;
   });
 
   socket.on('connect_error', (error) => {
     console.error('could not connect to %s%s (%s)', serverUrl, opts.path, error.message);
-    txtConnection.innerHTML = 'Connection failed';
-    btnConnect.disabled = false;
   });
 
   socket.on('newProducer', () => {
     console.log('newProducer');
-    btnSubscribe.disabled = false;
   });
 }
 
@@ -75,6 +61,7 @@ async function loadDevice (routerRtpCapabilities) {
   await device.load({ routerRtpCapabilities });
 }
 
+/*
 async function publish () {
   console.log('publishing...');
   txtPublish.innerHTML = 'publishing...';
@@ -94,7 +81,7 @@ async function publish () {
   }
   txtPublish.innerHTML = 'published';
   btnSubscribe.disabled = false;
-}
+} */
 
 async function connectProducerTransport (transportInfo) {
   const transport = device.createSendTransport(transportInfo);
@@ -120,13 +107,10 @@ async function connectProducerTransport (transportInfo) {
 
 async function subscribe () {
   console.log('subscribing...');
-  txtSubscription.innerHTML = 'subscribing...';
-  btnSubscribe.disabled = true;
   const data = await socket.request('createConsumerTransport', {
     forceTcp: false,
   });
   await connectConsumerTransport(data);
-  txtSubscription.innerHTML = 'subscribed';
 }
 
 async function connectConsumerTransport (transportInfo) {
@@ -168,24 +152,6 @@ async function consume (transport) {
   socket.emit('newConsumer');
 }
 
-async function startWebcam (transport) {
-  console.info('start webcam...');
-
-  if (!device.canProduce('video')) {
-    console.error('cannot produce video');
-    return;
-  }
-
-  let stream;
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-    });
-  } catch (err) {
-    console.error('starting webcam failed,', err.message);
-    throw err;
-  }
-  const track = stream.getVideoTracks()[0];
-  document.querySelector('#local_video').srcObject = stream;
-  producer = await transport.produce({ track });
-}
+window.addEventListener("load", function(){
+    connect();
+});

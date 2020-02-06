@@ -1,35 +1,108 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="icon" type="image/png" href="mediasoup.png" />
-  <title>Mediasoup Sample App</title>
-</head>
-<body>
-  <div>
-    <div><button id="btn_connect">Connect</button> <span id="connection_status"></span></div><br>
-    <div><button id="btn_publish" disabled>Publish</button> <span id="pub_status"></span></div><br>
-    <div><button id="btn_subscribe" disabled>Subscribe</button> <span id="sub_status"></span></div><br>
-  </div>
-  <br>
-  <table>
-    <tr>
-      <td>
-        <div>Local</div>
-        <video id="local_video" controls autoplay playsinline style="max-width:400px"></video>
-      </td>
-      <td>
-        <div>Remote</div>
-        <video id="remote_video" controls autoplay playsinline style="max-width:400px"></video>
-      </td>
-    </tr>
-  </table>
-</body>
-<script>
-  // window.localStorage.setItem('debug', 'mediasoup-client:WARN* mediasoup-client:ERROR*');
-  window.localStorage.setItem('debug', 'mediasoup-client:*');
-</script>
-<script type="text/javascript" src="app-bundle.js"></script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Stream Master UI</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./assets/css/dashboard.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Stream Master UI</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="index.html">Master</a></li>
+            <li><a href="client.html">Client</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="https://de.wikipedia.org/wiki/WebRTC">Help</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><h4>Americar24</h4></li>
+            <li class="active"><a href="#">Kanal 1<span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Kanal 2</a></li>
+            <li><a href="#">Kanal 3</a></li>
+            <li><a href="#">Kanal 4</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><h4>Car Super Shop</h4></li>
+            <li><a href="">Kanal 1</a></li>
+            <li><a href="">Kanal 2</a></li>
+            <li><a href="">Kanal 3</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><h4>123 Auto Export</h4></li>
+            <li><a href="">Kanal 1</a></li>
+            <li><a href="">Kanal 2</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Preview</h1>
+
+             <video class="vid-border" id="local_video" controls autoplay playsinline style="max-width:640px" poster="./assets/img/logo-default.png"></video>
+
+          <h2 class="sub-header">Control</h2>
+          <div class="row">
+              <div class="col-md-6">
+                <button type="button" class="btn btn-default" id="btn_connect"><span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span> Connect</button>
+              </div>
+              <div class="col-md-6">
+                <button type="button" class="btn btn-default" id="btn_publish" disabled><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Publish</button>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                <span id="connection_status"></span>
+              </div>
+              <div class="col-md-6">
+                <span id="pub_status"></span>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                 <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
+              </div>
+              <div class="col-md-6">
+                <label for="videoSource">Video source: </label><select id="videoSource"></select>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="app-bundle-master.js"></script>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+  </body>
 </html>
